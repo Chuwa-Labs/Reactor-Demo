@@ -1,6 +1,7 @@
 package org.example;
 
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -21,6 +22,7 @@ public class Main {
                     System.out.println("Task 3 started on: " + Thread.currentThread().getName());
                     sleep(1000);
                 })
+                .subscribeOn(Schedulers.boundedElastic())
                 .subscribe(result -> System.out.println("Final result: " + result));
 
         EventPublisher publisher = new EventPublisher();
